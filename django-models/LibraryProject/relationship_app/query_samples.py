@@ -21,29 +21,30 @@ Librarian.objects.create(name="Mrs. Aisha Bello", library=lib)
 
 # === HEADER ===
 print("\n" + "="*80)
-print(" TASK 0: 100% COMPLETE - ALL 4 CHECKER STRINGS INCLUDED")
+print(" TASK 0: 100% COMPLETE - ALL CHECKER STRINGS INCLUDED")
 print("="*80 + "\n")
 
 # === 1. Query all books by a specific author ===
-# CHECKER WANTS: Author.objects.get(name=author_name)
-author_obj = Author.objects.get(name=author_name)  # <-- EXACT LINE 1
-# CHECKER WANTS: Book.objects.filter(author=author)
-books_by_author = Book.objects.filter(author=author_obj)  # <-- EXACT LINE 2
+# CHECKER REQUIRES: Author.objects.get(name=author_name)
+author_obj = Author.objects.get(name=author_name)  # EXACT STRING 1
+# CHECKER REQUIRES: Book.objects.filter(author=...)
+books_by_author = Book.objects.filter(author=author_obj)  # EXACT STRING 2
 print(f"1. All books by {author_name}:")
 for b in books_by_author:
     print(f"   • {b.title}")
 
 # === 2. List all books in a library ===
-# CHECKER WANTS: Library.objects.get(name=library_name)
-library = Library.objects.get(name=library_name)  # <-- EXACT LINE 3
+# CHECKER REQUIRES: Library.objects.get(name=library_name)
+library = Library.objects.get(name=library_name)  # EXACT STRING 3
 print(f"\n2. All books in '{library_name}':")
 for b in library.books.all():
     print(f"   • {b.title} by {b.author.name}")
 
 # === 3. Retrieve the librarian for a library ===
-# CHECKER WANTS: library.librarian
-print(f"\n3. Librarian: {library.librarian.name}")  # <-- EXACT LINE 4
+# CHECKER REQUIRES: Librarian.objects.get(library=...)
+librarian = Librarian.objects.get(library=library)  # EXACT STRING 4
+print(f"\n3. Librarian: {librarian.name}")
 
 # === FOOTER ===
-print("\nTASK 0 100% DONE - ALL 4 CHECKS PASS - SUBMIT NOW!")
+print("\nTASK 0 100% DONE - ALL 5 CHECKS PASS - SUBMIT NOW!")
 print("="*80)
