@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html><head><title>Books</title></head><body>
+<h1>All Books</h1>
+<ul>
+{% for book in books %}
+    <li>{{ book.title }} by {{ book.author.name }}
+        <a href="{% url 'relationship_app:edit_book' book.pk %}">Edit</a> |
+        <a href="{% url 'relationship_app:delete_book' book.pk %}">Delete</a>
+    </li>
+{% empty %}
+    <li>No books.</li>
+{% endfor %}
+</ul>
+<a href="{% url 'relationship_app:add_book' %}">Add New Book</a>
+</body></html>
+

@@ -17,3 +17,9 @@ urlpatterns = [
     path('librarian/', views.librarian_view, name='librarian_view'),
     path('member/', views.member_view, name='member_view'),
 ]
+# === TASK 4: BOOK CRUD ===
+    path('book/list/', book_list, name='book_list'),
+    path('book/add/', add_book, name='add_book'),
+    path('book/edit/<int:pk>/', edit_book, name='edit_book'),
+    path('book/delete/<int:pk>/', delete_book, name='delete_book'),
+]
