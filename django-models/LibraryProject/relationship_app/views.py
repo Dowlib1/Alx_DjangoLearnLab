@@ -18,11 +18,6 @@ def register(request):
         form = RegisterForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-class CustomLoginView(LoginView):
-    template_name = 'relationship_app/login.html'
-
-class CustomLogoutView(LogoutView):
-    template_name = 'relationship_app/logout.html'
 
 # === TASK 1: KEEP EXISTING VIEWS ===
 def list_books(request):
