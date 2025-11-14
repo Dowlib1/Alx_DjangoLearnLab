@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html><head><title>Delete Book</title></head><body>
+<h1>Delete {{ book.title }}?</h1>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'relationship_app:book_list' %}">Cancel</a>
+</form>
+</body></html>

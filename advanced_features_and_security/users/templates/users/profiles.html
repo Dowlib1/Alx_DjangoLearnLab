@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - {{ user.email }}</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        img { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; }
+    </style>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Date of Birth:</strong> {{ user.date_of_birth|default:"Not set" }}</p>
+    
+    {% if user.profile_photo %}
+        <p><strong>Photo:</strong></p>
+        <img src="{{ user.profile_photo.url }}" alt="Profile photo">
+    {% else %}
+        <p><em>No photo uploaded</em></p>
+    {% endif %}
+
+    <br>
+    <a href="/admin/">Back to Admin</a>
+</body>
+</html>
