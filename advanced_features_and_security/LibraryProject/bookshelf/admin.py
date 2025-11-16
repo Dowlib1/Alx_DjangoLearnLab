@@ -33,4 +33,16 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'publication_year')
     search_fields = ('title', 'author')
     list_filter = ('publication_year', 'author')
+from django.contrib import admin
+from django.contrib.auth import get_user_model
+from accounts.admin import CustomUserAdmin
 
+CustomUser = get_user_model()
+
+try:
+    admin.site.unregister(CustomUser)
+except admin.sites.NotRegistered:
+    pass
+
+
+admin.site.register(CustomUser, CustomUserAdmin)
