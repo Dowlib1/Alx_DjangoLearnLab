@@ -35,6 +35,33 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+
+
+
+# --- Cookie and session security ---
+SESSION_COOKIE_SECURE = True                # only send session cookie over HTTPS
+CSRF_COOKIE_SECURE = True                   # only send CSRF cookie over HTTPS
+SESSION_COOKIE_HTTPONLY = True              # JavaScript can't read session cookie
+CSRF_COOKIE_HTTPONLY = False                # usually False: templates/JS need CSRF token
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# --- SSL / HSTS / redirect ---
+SECURE_SSL_REDIRECT = True                  # redirect all HTTP -> HTTPS
+SECURE_HSTS_SECONDS = 31536000              # one year (adjust as needed)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+# If running behind a proxy/load-balancer that sets X-Forwarded-Proto:
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# --- Browser protections ---
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,10 +151,28 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Example CSP - tighten for your real environment, allow only the domains you use.
+# Keep this minimal during development; relax only for trusted CDNs you use.
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "cdnjs.cloudflare.com")   # add CDNs you actually use
+CSP_STYLE_SRC = ("'self'", "cdnjs.cloudflare.com")
+CSP_IMG_SRC = ("'self'", "data:")
+CSP_FONT_SRC = ("'self'",)
+CSP_CONNECT_SRC = ("'self'",)
+# Optionally report-only endpoint:
+# CSP_REPORT_URI = '/csp-report/'
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -138,7 +183,32 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 #media for profile photos
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'media'#we need to comment this out if the _-------_
     
 DEFAULT_AUTO_FIELD = 'django.db.model.BigAutoField'
 
+
+
+# --- Media & Image handling (profile photos) ---
+# MEDIA_URL = '/media/'    
+# For this recognise _-----------------------------------------------------_
+BASE_DIR = globals().get('BASE_DIR', None)  # existing BASE_DIR in your settings
+if BASE_DIR is not None:
+    MEDIA_ROOT = BASE_DIR / 'media' if hasattr(BASE_DIR, '__truediv__') else os.path.join(BASE_DIR, 'media')
+
+# --- Logging note (optional - useful in production) ---
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+    },
+}
+
+# Notes:
+# - Use environment variables for SECRET_KEY, DB credentials, and ALLOWED_HOSTS.
+# - During local development you may set DJANGO_DEBUG=1 in your environment to run with DEBUG=True.

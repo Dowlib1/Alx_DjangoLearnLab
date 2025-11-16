@@ -1,0 +1,18 @@
+ url=https://github.com/Dowlib1/Alx_DjangoLearnLab/blob/main/advanced_features_and_security/LibraryProject/bookshelf/templates/bookshelf/book_list.html
+{% extends "base.html" %}
+{% block content %}
+  <h1>Book list</h1>
+
+  <form method="get" action="">
+    <input type="text" name="q" value="{{ request.GET.q|default_if_none:''|escape }}">
+    <button type="submit">Search</button>
+  </form>
+
+  <ul>
+    {% for book in books %}
+      <li>{{ book.title|escape }} by {{ book.author|escape }} ({{ book.publication_year }})</li>
+    {% empty %}
+      <li>No books found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
