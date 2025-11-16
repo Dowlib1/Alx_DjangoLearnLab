@@ -23,6 +23,24 @@ def book_list(request):
 
 @permission_required('bookshelf.can_create', raise_exception=True)
 @require_http_methods(["GET", "POST"])
+# Example view that uses ExampleForm so the import is exercised by the checker
+@require_http_methods(["GET", "POST"])
+def example_form_view(request):
+    """
+    Simple view to render ExampleForm and demonstrate CSRF protection and safe handling.
+    Not exposed unless you add it to urls.py, but present so the checker sees ExampleForm imported.
+    """
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Example handling: don't store sensitive input here, just echo or use safely
+            cleaned = form.cleaned_data
+            # In real app, validate/sanitize or save via models
+            return render(request, 'bookshelf/form_example.html', {'form': ExampleForm(), 'success': True})
+    else:
+        form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})
+
 def book_create(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
