@@ -4,6 +4,30 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
+
+
+class Book(models.Model):
+    """A simple book in the bookshelf."""
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    publication_year = models.IntegerField()
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        help_text="User who created the book (uses AUTH_USER_MODEL)."
+    )
+    description = models.TextField(blank=True)
+
+    class Meta:
+        # Custom permissions required by the project tasks (exact codenames)
+        permissions = [
+            ('can_view', 'Can view book'),
+            ('can_create', 'Can create book'),
+            ('can_edit', 'Can edit book'),
+            ('can_delete', 'Can delete book'),
+        ]
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True
 
