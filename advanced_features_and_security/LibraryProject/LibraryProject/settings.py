@@ -51,6 +51,7 @@ SECURE_SSL_REDIRECT = True                  # redirect all HTTP -> HTTPS
 SECURE_HSTS_SECONDS = 31536000              # one year (adjust as needed)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # If running behind a proxy/load-balancer that sets X-Forwarded-Proto:
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -71,7 +72,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-#    'books',
+    'books',
     'bookshelf',
     'relationship_app',
     'users',

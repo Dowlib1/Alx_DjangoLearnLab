@@ -1,6 +1,9 @@
  url=https://github.com/Dowlib1/Alx_DjangoLearnLab/blob/main/advanced_features_and_security/LibraryProject/bookshelf/templates/bookshelf/form_example.html
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {% if success %}
+      <p style="color:green">Form submitted successfully.</p>
+    {% endif %}
     {{ form.as_p }}
     <button type="submit">Save</button>
-</form>
+</form>ii>
