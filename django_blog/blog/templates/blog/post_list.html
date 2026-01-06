@@ -6,3 +6,9 @@
     <p>{{ post.content|truncatewords:50 }}</p>
 {% endfor %}
 {% endblock %}
+
+
+<#temp for tagging-->
+{% for tag in post.tags.all %}
+    <a href="{% url 'tag_posts' tag.name %}">{{ tag.name }}</a>
+{% endfor %}
