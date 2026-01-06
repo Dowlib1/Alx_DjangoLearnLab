@@ -1,0 +1,14 @@
+<!-- blog/templates/blog/login.html -->
+{% extends 'blog/base.html' %}
+{% block content %}
+<h3>Login</h3>
+<form method="post">
+    {% csrf_token %}
+    <label>Username:</label><input type="text" name="username"><br>
+    <label>Password:</label><input type="password" name="password"><br>
+    <button type="submit">Login</button>
+</form>
+{% endblock %}
+
+
+<!Entire file Needs adjustment>
