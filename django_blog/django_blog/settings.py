@@ -80,7 +80,7 @@ DATABASES = {
         'USER': 'dowlib1',
         'PASSWORD': 'PasswdLAter1',
         'HOST': 'localhost',
-        'PORT': '3346', #needs adjustment
+        'PORT': '3306', 
     }
 }
 
