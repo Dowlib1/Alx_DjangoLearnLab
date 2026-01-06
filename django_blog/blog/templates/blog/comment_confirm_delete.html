@@ -1,16 +1,4 @@
-
-{% extends 'blog/base.html' %}
-{% block content %}
-<h2>Blog Posts</h2>
-{% for post in posts %}
-    <h3><a href="{% url 'post_form' post.pk %}">{{ form.as_p }}</a></h3>
-    <p>{{ post.content|truncatewords:50 }}</p>
-{% endfor %}
-{% endblock %}
-
-
-
-<!-- To show comments -->
+<!-- Deleting a comment -->
 <h3>Comments</h3>
 {% for comment in comments %}
     <p>{{ comment.author }}: {{ comment.content }} ({{ comment.created_at }})</p>
