@@ -18,8 +18,9 @@ urlpatterns = [
     #add-up
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment_new'),  # But since integrated, maybe not needed
     path('comment/<int:pk>/edit/', CommentUpdateView.as_view(), name='comment_edit'),
+     path('comment/<int:pk>/update/', CommentCreateView.as_view(), name='comment_update'), 
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
     path('search/', SearchResultsView.as_view(), name='search'),
-    path('tags/<str:tag_name>/', TagView.as_view(), name='tag_posts'),
+    path('tag/<str:tag_name>/', TagView.as_view(), name='tag_posts'),
 #comment or comments will fit in    
 ]
