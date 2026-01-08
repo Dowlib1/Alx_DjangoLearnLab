@@ -8,9 +8,13 @@ class Post(models.Model):
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'pk': self.pk})  # Assumes app_name='blog' in urls.py
 
 # add
 class Comment(models.Model):
@@ -24,6 +28,4 @@ class Comment(models.Model):
         return f'Comment by {self.author} on {self.post}'
 
 
-class Post(models.Model):
-    # ... existing fields ...
-    tags = TaggableManager()
+
