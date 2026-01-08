@@ -17,7 +17,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content', 'tags']
         widgets = {
-             'tags': Tagwidget()
+             'tags': Tagwidget() # fixed typo from tagwidget to Tagwidget
         }
 
 class CommentForm(forms.ModelForm):
