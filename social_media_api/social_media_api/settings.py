@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-ygzjfrim$5t*p+v%zdwy2=99+o6e-w-0%j%07iaepylsplm-jx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dowlib.com', '*.herokuapp.com']
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # If using HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 AUTH_USER_MODEL = 'accounts.CustomUser' #grok recommendations
 # Application definition
@@ -89,11 +95,20 @@ WSGI_APPLICATION = 'social_media_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Postgresql',
+        'USER': 'dbuser',
+        'PASSWORD': 'dbpass',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
+#Static files
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
