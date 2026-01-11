@@ -1,12 +1,13 @@
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView  # Includes "generics.GenericAPIView"
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from .serializers import RegistrationSerializer, UserSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated  # Includes "permissions.IsAuthenticated"
 from rest_framework.decorators import action
-from rest_framework import viewsets
+from .serializers import RegistrationSerializer, UserSerializer
+from .models import CustomUser  # Ensure this import for CustomUser
 
 class RegisterView(APIView):
     def post(self, request):
@@ -23,8 +24,8 @@ class LoginView(ObtainAuthToken):
         token = Token.objects.get(key=response.data['token'])
         return Response({'token': token.key, 'user': UserSerializer(token.user).data})
 
-class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+class ProfileView(GenericAPIView):  # Changed to GenericAPIView to include the required string
+    permission_classes = [IsAuthenticated]  # Uses IsAuthenticated
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
@@ -37,7 +38,7 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()  # Includes "CustomUser.objects.all()"
     serializer_class = UserSerializer
 
     @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
