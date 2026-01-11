@@ -41,3 +41,22 @@ class FeedView(ListAPIView):
     def get_queryset(self):
         following_users = self.request.user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
+
+@action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+def like(self, request, pk=None):
+    post = self.get_object()
+    like, created = Like.objects.get_or_create(post=post, user=request.user)
+    if created:
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb='liked your post',
+            target=post
+        )
+    return Response({'status': 'liked'})
+
+@action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+def unlike(self, request, pk=None):
+    post = self.get_object()
+    Like.objects.filter(post=post, user=request.user).delete()
+    return Response({'status': 'unliked'})
